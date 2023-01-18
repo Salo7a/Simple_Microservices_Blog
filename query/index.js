@@ -34,11 +34,13 @@ const handleEvent = (eventType, data) => {
     }
 }
 app.get('/posts', (req, res, next) => {
+    console.log("Get All Posts");
     res.send(postsWithComments);
 })
 
 app.post('/events', (req, res, next) => {
-    const {type, data} = req.body.type;
+    const {type, data} = req.body;
+    console.log(`Processing event ${type}`);
     handleEvent(type, data);
     res.send({});
 })
@@ -47,7 +49,7 @@ app.post('/events', (req, res, next) => {
 app.listen(4002, async () => {
     console.log("Listening on port 4002");
     try {
-        const res = await axios.get("http://localhost:4005/events")
+        const res = await axios.get("http://event-bus-srv:4005/events")
         for (let event of res.data.events) {
             console.log(`Processing event ${event.type}`);
             handleEvent(event.type, event.data);

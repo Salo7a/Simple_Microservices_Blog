@@ -15,13 +15,13 @@ app.get('/posts', (req, res, next) => {
     res.send(posts);
 })
 
-app.post('/posts', async (req, res, next) => {
+app.post('/posts/create', async (req, res, next) => {
     console.log(req.body)
     const id = randomBytes(5).toString('hex');
     let {title, content} = req.body;
     posts[id] = {id, title, content};
     try {
-        await axios.post("http://localhost:4005/events", {
+        await axios.post("http://event-bus-srv:4005/events", {
             type: "PostCreated",
             data: {id, title, content}
         })
@@ -37,5 +37,6 @@ app.post('/events', (req, res, next) => {
 })
 
 app.listen(4000, () => {
-    console.log("Listening on port 4000")
+    console.log('v2');
+    console.log("Listening on port 4000");
 })

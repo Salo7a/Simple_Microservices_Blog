@@ -5,7 +5,7 @@ export default function CommentCreate({postId, onCreate}) {
     const [content, setContent] = useState('');
     const onSubmit = async (event) => {
         event.preventDefault();
-        await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
+        await axios.post(`http://simpleblog.com/posts/${postId}/comments`, {
             content
         })
         setContent('')
